@@ -1,0 +1,575 @@
+Round1:
+  Board1:
+    Pair1:
+      Team1: A.01
+      Team2: E.01
+    Pair2:
+      Team1: C.01
+      Team2: I.01
+    Pair3:
+      Team1: K.01
+      Team2: G.01
+    Pair4:
+      Team1: B.01
+      Team2: F.01
+    Pair5:
+      Team1: D.01
+      Team2: J.01
+    Pair6:
+      Team1: L.01
+      Team2: H.01
+  Board2:
+    Pair1:
+      Team1: I.01
+      Team2: A.01
+    Pair2:
+      Team1: E.01
+      Team2: K.01
+    Pair3:
+      Team1: G.01
+      Team2: C.01
+    Pair4:
+      Team1: J.01
+      Team2: B.01
+    Pair5:
+      Team1: F.01
+      Team2: L.01
+    Pair6:
+      Team1: H.01
+      Team2: D.01
+  Board3:
+    Pair1:
+      Team1: A.01
+      Team2: B.01
+    Pair2:
+      Team1: D.01
+      Team2: C.01
+    Pair3:
+      Team1: E.01
+      Team2: F.01
+    Pair4:
+      Team1: H.01
+      Team2: G.01
+    Pair5:
+      Team1: I.01
+      Team2: J.01
+    Pair6:
+      Team1: L.01
+      Team2: K.01
+  Board4:
+    Pair1:
+      Team1: C.01
+      Team2: A.01
+    Pair2:
+      Team1: B.01
+      Team2: D.01
+    Pair3:
+      Team1: G.01
+      Team2: E.01
+    Pair4:
+      Team1: F.01
+      Team2: H.01
+    Pair5:
+      Team1: K.01
+      Team2: I.01
+    Pair6:
+      Team1: J.01
+      Team2: L.01
+  Board5:
+    Pair1:
+      Team1: A.01
+      Team2: D.01
+    Pair2:
+      Team1: G.01
+      Team2: J.01
+    Pair3:
+      Team1: B.01
+      Team2: E.01
+    Pair4:
+      Team1: H.01
+      Team2: K.01
+    Pair5:
+      Team1: C.01
+      Team2: F.01
+    Pair6:
+      Team1: I.01
+      Team2: L.01
+  Board6:
+    Pair1:
+      Team1: J.01
+      Team2: A.01
+    Pair2:
+      Team1: D.01
+      Team2: G.01
+    Pair3:
+      Team1: K.01
+      Team2: B.01
+    Pair4:
+      Team1: E.01
+      Team2: H.01
+    Pair5:
+      Team1: L.01
+      Team2: C.01
+    Pair6:
+      Team1: F.01
+      Team2: I.01
+  Board7:
+    Pair1:
+      Team1: A.01
+      Team2: L.01
+    Pair2:
+      Team1: B.01
+      Team2: C.01
+    Pair3:
+      Team1: E.01
+      Team2: D.01
+    Pair4:
+      Team1: F.01
+      Team2: G.01
+    Pair5:
+      Team1: I.01
+      Team2: H.01
+    Pair6:
+      Team1: J.01
+      Team2: K.01
+  Board8:
+    Pair1:
+      Team1: L.01
+      Team2: B.01
+    Pair2:
+      Team1: C.01
+      Team2: E.01
+    Pair3:
+      Team1: D.01
+      Team2: F.01
+    Pair4:
+      Team1: G.01
+      Team2: I.01
+    Pair5:
+      Team1: H.01
+      Team2: J.01
+    Pair6:
+      Team1: K.01
+      Team2: A.01
+  Board9:
+    Pair1:
+      Team1: A.01
+      Team2: F.01
+    Pair2:
+      Team1: K.01
+      Team2: D.01
+    Pair3:
+      Team1: I.01
+      Team2: B.01
+    Pair4:
+      Team1: G.01
+      Team2: L.01
+    Pair5:
+      Team1: E.01
+      Team2: J.01
+    Pair6:
+      Team1: C.01
+      Team2: H.01
+  Board10:
+    Pair1:
+      Team1: H.01
+      Team2: A.01
+    Pair2:
+      Team1: F.01
+      Team2: K.01
+    Pair3:
+      Team1: D.01
+      Team2: I.01
+    Pair4:
+      Team1: B.01
+      Team2: G.01
+    Pair5:
+      Team1: L.01
+      Team2: E.01
+    Pair6:
+      Team1: J.01
+      Team2: C.01
+
+Round2:
+  Board1:
+    Pair1:
+      Team1: E.01
+      Team2: I.01
+    Pair2:
+      Team1: G.01
+      Team2: A.01
+    Pair3:
+      Team1: C.01
+      Team2: K.01
+    Pair4:
+      Team1: F.01
+      Team2: J.01
+    Pair5:
+      Team1: H.01
+      Team2: B.01
+    Pair6:
+      Team1: D.01
+      Team2: L.01
+  Board2:
+    Pair1:
+      Team1: A.01
+      Team2: E.01
+    Pair2:
+      Team1: I.01
+      Team2: C.01
+    Pair3:
+      Team1: K.01
+      Team2: G.01
+    Pair4:
+      Team1: B.01
+      Team2: F.01
+    Pair5:
+      Team1: J.01
+      Team2: D.01
+    Pair6:
+      Team1: L.01
+      Team2: H.01
+  Board3:
+    Pair1:
+      Team1: C.01
+      Team2: A.01
+    Pair2:
+      Team1: B.01
+      Team2: D.01
+    Pair3:
+      Team1: G.01
+      Team2: E.01
+    Pair4:
+      Team1: F.01
+      Team2: H.01
+    Pair5:
+      Team1: K.01
+      Team2: I.01
+    Pair6:
+      Team1: J.01
+      Team2: L.01
+  Board4:
+    Pair1:
+      Team1: A.01
+      Team2: B.01
+    Pair2:
+      Team1: D.01
+      Team2: C.01
+    Pair3:
+      Team1: E.01
+      Team2: F.01
+    Pair4:
+      Team1: H.01
+      Team2: G.01
+    Pair5:
+      Team1: I.01
+      Team2: J.01
+    Pair6:
+      Team1: L.01
+      Team2: K.01
+  Board5:
+    Pair1:
+      Team1: J.01
+      Team2: A.01
+    Pair2:
+      Team1: D.01
+      Team2: G.01
+    Pair3:
+      Team1: K.01
+      Team2: B.01
+    Pair4:
+      Team1: E.01
+      Team2: H.01
+    Pair5:
+      Team1: L.01
+      Team2: C.01
+    Pair6:
+      Team1: F.01
+      Team2: I.01
+  Board6:
+    Pair1:
+      Team1: A.01
+      Team2: D.01
+    Pair2:
+      Team1: G.01
+      Team2: J.01
+    Pair3:
+      Team1: B.01
+      Team2: E.01
+    Pair4:
+      Team1: H.01
+      Team2: K.01
+    Pair5:
+      Team1: C.01
+      Team2: F.01
+    Pair6:
+      Team1: I.01
+      Team2: L.01
+  Board7:
+    Pair1:
+      Team1: L.01
+      Team2: B.01
+    Pair2:
+      Team1: C.01
+      Team2: E.01
+    Pair3:
+      Team1: D.01
+      Team2: F.01
+    Pair4:
+      Team1: G.01
+      Team2: I.01
+    Pair5:
+      Team1: H.01
+      Team2: J.01
+    Pair6:
+      Team1: K.01
+      Team2: A.01
+  Board8:
+    Pair1:
+      Team1: A.01
+      Team2: L.01
+    Pair2:
+      Team1: B.01
+      Team2: C.01
+    Pair3:
+      Team1: E.01
+      Team2: D.01
+    Pair4:
+      Team1: F.01
+      Team2: G.01
+    Pair5:
+      Team1: I.01
+      Team2: H.01
+    Pair6:
+      Team1: J.01
+      Team2: K.01
+  Board9:
+    Pair1:
+      Team1: H.01
+      Team2: A.01
+    Pair2:
+      Team1: F.01
+      Team2: K.01
+    Pair3:
+      Team1: D.01
+      Team2: I.01
+    Pair4:
+      Team1: B.01
+      Team2: G.01
+    Pair5:
+      Team1: L.01
+      Team2: E.01
+    Pair6:
+      Team1: J.01
+      Team2: C.01
+  Board10:
+    Pair1:
+      Team1: A.01
+      Team2: F.01
+    Pair2:
+      Team1: K.01
+      Team2: D.01
+    Pair3:
+      Team1: I.01
+      Team2: B.01
+    Pair4:
+      Team1: G.01
+      Team2: L.01
+    Pair5:
+      Team1: E.01
+      Team2: J.01
+    Pair6:
+      Team1: C.01
+      Team2: H.01
+
+Round3:
+  Board1:
+    Pair1:
+      Team1: I.01
+      Team2: A.01
+    Pair2:
+      Team1: K.01
+      Team2: E.01
+    Pair3:
+      Team1: G.01
+      Team2: C.01
+    Pair4:
+      Team1: J.01
+      Team2: B.01
+    Pair5:
+      Team1: L.01
+      Team2: F.01
+    Pair6:
+      Team1: H.01
+      Team2: D.01
+  Board2:
+    Pair1:
+      Team1: E.01
+      Team2: I.01
+    Pair2:
+      Team1: A.01
+      Team2: G.01
+    Pair3:
+      Team1: C.01
+      Team2: K.01
+    Pair4:
+      Team1: F.01
+      Team2: J.01
+    Pair5:
+      Team1: B.01
+      Team2: H.01
+    Pair6:
+      Team1: D.01
+      Team2: L.01
+  Board3:
+    Pair1:
+      Team1: A.01
+      Team2: F.01
+    Pair2:
+      Team1: K.01
+      Team2: D.01
+    Pair3:
+      Team1: I.01
+      Team2: B.01
+    Pair4:
+      Team1: G.01
+      Team2: L.01
+    Pair5:
+      Team1: E.01
+      Team2: J.01
+    Pair6:
+      Team1: C.01
+      Team2: H.01
+  Board4:
+    Pair1:
+      Team1: H.01
+      Team2: A.01
+    Pair2:
+      Team1: F.01
+      Team2: K.01
+    Pair3:
+      Team1: D.01
+      Team2: I.01
+    Pair4:
+      Team1: B.01
+      Team2: G.01
+    Pair5:
+      Team1: L.01
+      Team2: E.01
+    Pair6:
+      Team1: J.01
+      Team2: C.01
+  Board5:
+    Pair1:
+      Team1: A.01
+      Team2: B.01
+    Pair2:
+      Team1: D.01
+      Team2: C.01
+    Pair3:
+      Team1: E.01
+      Team2: F.01
+    Pair4:
+      Team1: H.01
+      Team2: G.01
+    Pair5:
+      Team1: I.01
+      Team2: J.01
+    Pair6:
+      Team1: L.01
+      Team2: K.01
+  Board6:
+    Pair1:
+      Team1: C.01
+      Team2: A.01
+    Pair2:
+      Team1: B.01
+      Team2: D.01
+    Pair3:
+      Team1: G.01
+      Team2: E.01
+    Pair4:
+      Team1: F.01
+      Team2: H.01
+    Pair5:
+      Team1: K.01
+      Team2: I.01
+    Pair6:
+      Team1: J.01
+      Team2: L.01
+  Board7:
+    Pair1:
+      Team1: A.01
+      Team2: D.01
+    Pair2:
+      Team1: G.01
+      Team2: J.01
+    Pair3:
+      Team1: B.01
+      Team2: E.01
+    Pair4:
+      Team1: H.01
+      Team2: K.01
+    Pair5:
+      Team1: C.01
+      Team2: F.01
+    Pair6:
+      Team1: I.01
+      Team2: L.01
+  Board8:
+    Pair1:
+      Team1: J.01
+      Team2: A.01
+    Pair2:
+      Team1: D.01
+      Team2: G.01
+    Pair3:
+      Team1: K.01
+      Team2: B.01
+    Pair4:
+      Team1: E.01
+      Team2: H.01
+    Pair5:
+      Team1: L.01
+      Team2: C.01
+    Pair6:
+      Team1: F.01
+      Team2: I.01
+  Board9:
+    Pair1:
+      Team1: A.01
+      Team2: L.01
+    Pair2:
+      Team1: B.01
+      Team2: C.01
+    Pair3:
+      Team1: E.01
+      Team2: D.01
+    Pair4:
+      Team1: F.01
+      Team2: G.01
+    Pair5:
+      Team1: I.01
+      Team2: H.01
+    Pair6:
+      Team1: J.01
+      Team2: K.01
+  Board10:
+    Pair1:
+      Team1: L.01
+      Team2: B.01
+    Pair2:
+      Team1: C.01
+      Team2: E.01
+    Pair3:
+      Team1: D.01
+      Team2: F.01
+    Pair4:
+      Team1: G.01
+      Team2: I.01
+    Pair5:
+      Team1: H.01
+      Team2: J.01
+    Pair6:
+      Team1: K.01
+      Team2: A.01
