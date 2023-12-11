@@ -29,55 +29,32 @@ public class CriteriaUtils {
     System.out.println("  Checking criteria three");
     System.out.println("    Among the players on any given board, there shall be no more than one up-float or down-float per round.");
     tournament.getRounds().forEach((roundIndex, round) -> {
-      int[] upFloats = new int[Main.numberOfTeams];
-      int[] downFloats = new int[Main.numberOfTeams];
+      int[] upFloats = new int[Main.numberOfPlayers];
+      int[] downFloats = new int[Main.numberOfPlayers];
 
       Board board = round.getBoards().get(-1);
       if (board != null) {
         board.getPairs().forEach((pairIndex, pair) -> {
           if (pair.team1Board() != pair.team2Board()) {
-            AtomicInteger team1Index = new AtomicInteger();
-            AtomicInteger team2Index = new AtomicInteger();
             if (pair.team1Board() > pair.team2Board()) {
-              Main.letterIndex.forEach((k, v) -> {
-                if (Objects.equals(pair.team1(), v)) {
-                  team1Index.set(k);
-                }
-              });
-              upFloats[team1Index.get() - 1]++;
-              if (upFloats[team1Index.get() -1] > 1) {
-                System.out.println(pair.team1() + " has had more than 1 up floats in round" + roundIndex);
+              upFloats[pair.team1Board() - 1]++;
+              downFloats[pair.team2Board() - 1]++;
+              if (downFloats[pair.team2Board() - 1] > 1) {
+                System.out.println(pair.team2Board() + " has had more than 1 down floats in round" + roundIndex);
+                System.exit(0);
+              } else if (upFloats[pair.team1Board() - 1] > 1) {
+                System.out.println(pair.team1Board() + " has had more than 1 up floats in round" + roundIndex);
                 System.exit(0);
               }
-              Main.letterIndex.forEach((k, v) -> {
-                if (Objects.equals(pair.team2(), v)) {
-                  team2Index.set(k);
-                }
-              });
-              downFloats[team2Index.get() - 1]++;
-              if (downFloats[team2Index.get() -1] > 1) {
-                System.out.println(pair.team2() + " has had more than 1 down floats in round" + roundIndex);
+            }
+            else {
+              upFloats[pair.team2Board() - 1]++;
+              downFloats[pair.team1Board() - 1]++;
+              if (downFloats[pair.team1Board() - 1] > 1) {
+                System.out.println(pair.team1Board() + " has had more than 1 down floats in round" + roundIndex);
                 System.exit(0);
-              }
-            } else {
-              Main.letterIndex.forEach((k, v) -> {
-                if (Objects.equals(pair.team1(), v)) {
-                  team1Index.set(k);
-                }
-              });
-              downFloats[team1Index.get() - 1]++;
-              if (downFloats[team1Index.get() -1] > 1) {
-                System.out.println(pair.team1() + " has had more than 1 down floats in round" + roundIndex);
-                System.exit(0);
-              }
-              Main.letterIndex.forEach((k, v) -> {
-                if (Objects.equals(pair.team2(), v)) {
-                  team2Index.set(k);
-                }
-              });
-              upFloats[team2Index.get() - 1]++;
-              if (upFloats[team2Index.get() -1] > 1) {
-                System.out.println(pair.team2() + " has had more than 1 up floats in round" + roundIndex);
+              } else if (upFloats[pair.team2Board() - 1] > 1) {
+                System.out.println(pair.team2Board() + " has had more than 1 up floats in round" + roundIndex);
                 System.exit(0);
               }
             }
