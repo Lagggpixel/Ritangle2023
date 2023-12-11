@@ -25,7 +25,7 @@ public class Main {
 
     initLetters();
 
-    var1();
+    new GenerationUtils(8, 0);
 
     /*
     int band = 4;
