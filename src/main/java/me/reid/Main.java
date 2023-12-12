@@ -19,15 +19,68 @@ public class Main {
   public static final int numberOfTeams = 11;
   public static final int numberOfPlayers = 10;
   public static final int numberOfRounds = 3;
+  public static int skipped = 0;
+
 
   @SneakyThrows
   public static void main(String[] args) {
 
     initLetters();
 
-    new GenerationUtils(8, 0);
+    // new GenerationUtils(9, 2);
 
-    /*
+    // var1();
+    var6();
+
+  }
+
+  public static void var0() {
+    File output = ExcelImportUtils.loadFromExcelEven(new File("sources/task2/final.xlsx"), numberOfRounds, numberOfTeams, numberOfPlayers).get(0);
+    CalculationsUtils.calculateFile(output);
+    ExportUtils.export(output);
+    Tournament tournament = TournamentLoader.load(output);
+    CriteriaUtils.checkAllCriteria(tournament);
+  }
+
+
+  public static void var1() {
+    String input = "sources/task3/0.txt";
+
+    File output = TextImportUtils.loadFromFileOdd(new File(input), numberOfRounds, numberOfTeams, numberOfPlayers);
+    CalculationsUtils.calculateFile(output);
+    ExportUtils.export(output);
+    Tournament tournament = TournamentLoader.load(output);
+    CriteriaUtils.checkAllCriteria(tournament);
+  }
+
+  public static void var2() {
+    DataAnalysisUtils.compareData(new File("/sources/task3/generated"));
+  }
+
+  public static void var3() {
+
+    Scanner scanner = new Scanner(System.in);
+    System.out.println("Enter input file path: ");
+    String input = scanner.nextLine();
+    input = "sources/" + input;
+    if (input.chars().filter(c -> c == '.').count() != 1) {
+      input += ".xlsx";
+    }
+
+    List<File> files = ExcelImportUtils.loadFromExcel(input, numberOfRounds, numberOfTeams, numberOfPlayers);
+
+
+    for (File file : files) {
+      System.out.println("--------------------------------------------------------------------------");
+      System.out.println("Sheet name: " + FilenameUtils.removeExtension(file.getName()));
+      CalculationsUtils.calculateFile(file);
+      ExportUtils.export(file);
+      System.out.println("--------------------------------------------------------------------------");
+    }
+
+  }
+
+  private static void var5() {
     int band = 4;
 
     Thread thread1 = new Thread(() -> {
@@ -86,46 +139,14 @@ public class Main {
     });
     thread11.start();
 
-     */
   }
 
-  public static void var1() {
-    String input = "sources/task3/0.txt";
-
-    File output = TextImportUtils.loadFromFileOdd(new File(input), numberOfRounds, numberOfTeams, numberOfPlayers);
-    CalculationsUtils.calculateFile(output);
-    ExportUtils.export(output);
-    Tournament tournament = TournamentLoader.load(output);
+  private static void var6() {
+    File file = ExportUtils.importData(new File("sources/task3/0_converted_export.txt"));
+    Tournament tournament = TournamentLoader.load(file);
+    CalculationsUtils.calculateFile(file);
     CriteriaUtils.checkAllCriteria(tournament);
   }
-
-  public static void var2() {
-    DataAnalysisUtils.compareData(new File("MathsPlugin"));
-  }
-
-  public static void var3() {
-
-    Scanner scanner = new Scanner(System.in);
-    System.out.println("Enter input file path: ");
-    String input = scanner.nextLine();
-    input = "sources/" + input;
-    if (input.chars().filter(c -> c == '.').count() != 1) {
-      input += ".xlsx";
-    }
-
-    List<File> files = ExcelImportUtils.loadFromExcel(input, numberOfRounds, numberOfTeams, numberOfPlayers);
-
-
-    for (File file : files) {
-      System.out.println("--------------------------------------------------------------------------");
-      System.out.println("Sheet name: " + FilenameUtils.removeExtension(file.getName()));
-      CalculationsUtils.calculateFile(file);
-      ExportUtils.export(file);
-      System.out.println("--------------------------------------------------------------------------");
-    }
-
-  }
-
 
   private static void initLetters() {
     letterIndex.put(1, "A");

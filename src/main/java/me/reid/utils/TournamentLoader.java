@@ -1,5 +1,6 @@
 package me.reid.utils;
 
+import lombok.SneakyThrows;
 import me.reid.data.Board;
 import me.reid.data.Pair;
 import me.reid.data.Round;
@@ -48,7 +49,7 @@ public class TournamentLoader {
           String team2 = pairSection.getString("Team2");
           int team1Board = pairSection.getInt("Team1Board");
           int team2Board = pairSection.getInt("Team2Board");
-          Pair pair = new Pair(team1, team1Board, team2, team2Board);
+          Pair pair = new Pair(pairIndex, team1, team1Board, team2, team2Board);
           board.getPairs().put(pairIndex, pair);
         }
         round.getBoards().put(boardIndex, board);
@@ -57,6 +58,34 @@ public class TournamentLoader {
     }
 
     return tournament;
+  }
+
+  @SneakyThrows
+  public static void save(Tournament tournament, File output) {
+    YamlConfiguration yamlConfiguration = new YamlConfiguration();
+
+    for (Round round : tournament.getRounds().values()) {
+      String roundKey = "Round" + round.getRoundIndex();
+      ConfigurationSection roundSection = yamlConfiguration.createSection(roundKey);
+
+      for (Board board : round.getBoards().values()) {
+        String boardKey = (board.getBoardIndex() == -1) ? "UpDownFloats" : "Board" + board.getBoardIndex();
+        ConfigurationSection boardSection = roundSection.createSection(boardKey);
+
+        for (Pair pair : board.getPairs().values()) {
+          String pairKey = "Pair" + pair.index();
+          ConfigurationSection pairSection = boardSection.createSection(pairKey);
+
+          pairSection.set("Team1", pair.team1());
+          pairSection.set("Team2", pair.team2());
+          pairSection.set("Team1Board", pair.team1Board());
+          pairSection.set("Team2Board", pair.team2Board());
+        }
+      }
+    }
+
+    yamlConfiguration.save(output);
+
   }
 
 }

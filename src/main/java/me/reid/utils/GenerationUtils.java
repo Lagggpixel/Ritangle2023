@@ -1,14 +1,13 @@
 package me.reid.utils;
 
-import lombok.SneakyThrows;
-import org.jetbrains.annotations.NotNull;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 
+@SuppressWarnings("DuplicatedCode")
 public class GenerationUtils {
+
   static String[] str = {"EFGHIJKABCCDDEFGHIJKAB", "ACEGIKBDFHHJJACEGIKBDF", "HKCFIADGJBBEEHKCFIADGJ", "DHAEIBFJCGGKKDHAEIBFJC", "KEJDICHBGAAFFKEJDICHBG"};
   static int[] A = new int[5];
   static int[] B = new int[5];
@@ -18,16 +17,16 @@ public class GenerationUtils {
   static int X = 100;
   static int Y = 100;
   static double Z = 100;
-
+  File outputFile;
   int band;
   int index;
-  File outputFile;
+  String prefix;
 
-  @SneakyThrows
-  public GenerationUtils(int band, int index) {
+  public GenerationUtils(int band, int index)  {
     this.band = band;
     this.index = index;
-    this.outputFile = new File("task3/" + band + "_" + index + ".txt");
+    prefix = "a: " + band + " " + index + " >> ";
+    this.outputFile = new File("sources/task3/generated/" + band + "_" + index + ".txt");
     if (outputFile.exists()) {
       if (!outputFile.delete()) {
         System.out.println("Could not delete file: " + outputFile.getAbsolutePath());
@@ -40,15 +39,21 @@ public class GenerationUtils {
         System.exit(1);
       }
     }
-    if (!outputFile.createNewFile()) {
-      System.out.println("Could not create file: " + outputFile.getAbsolutePath());
-      System.exit(1);
+    try {
+      if (!outputFile.createNewFile()) {
+        System.out.println("Could not create file: " + outputFile.getAbsolutePath());
+        System.exit(1);
+      }
+      FileWriter fileWriter = new FileWriter(outputFile);
+      fileWriter.write("a: " + band + " " + index + "\n");
+      fileWriter.close();
+      iterate1();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
-    iterate1();
   }
 
-  @SneakyThrows
-  public void calculate(int[] a, int[] b, int[][] c, int[] d, int[] e) {
+  public void calculate(int[] a, int[] b, int[][] c, int[] d, int[] e) throws IOException {
     String[][] s = new String[5][3];
     for (int i = 0; i < 5; i++) {
       for (int j = 0; j < 3; j++) {
@@ -121,30 +126,27 @@ public class GenerationUtils {
     int[][][] cntX = new int[11][3][2];
     int[][] cntY = new int[11][2];
     int[] cntZ = new int[11];
-    int x = 0;
-    int y = 0;
+    int x = 0, y = 0;
+    boolean ok = true;
     double z = 0;
-    for (int i = 0; i < 5; i++) {
-      for (int j = 0; j < 3; j++) {
-        for (int k = 0; k < 22; k++) {
+    for (int i = 0; i < 5; i++)
+      for (int j = 0; j < 3; j++)
+        for (int k = 0; k < 22; k++)
           cntX[s[i][j].charAt(k) - 'A'][j][k & 1]++;
-        }
-      }
-    }
     for (int i = 0; i < 11; i++) {
+      int sum0 = 0, sum1 = 0;
       for (int j = 0; j < 3; j++) {
         x += Math.abs(cntX[i][j][0] - cntX[i][j][1]);
+        sum0 += cntX[i][j][0];
+        sum1 += cntX[i][j][1];
+      }
+      if (sum0 != sum1) {
+        ok = false;
+        break;
       }
     }
-    for (int i = 0; i < 5; i++) {
-      for (int j = 0; j < 3; j++) {
-        cntY[s[i][j].charAt(10) - 'A'][0]++;
-        cntY[s[i][j].charAt(11) - 'A'][1]++;
-      }
-    }
-    for (int i = 0; i < 11; i++) {
-      y += Math.abs(cntY[i][0] - cntY[i][1]);
-    }
+    if (!ok)
+      return;
     for (int i = 0; i < 5; i++) {
       for (int j = 0; j < 3; j++) {
         for (int k = 0; k < 10; k += 2) {
@@ -158,6 +160,7 @@ public class GenerationUtils {
     for (int i = 0; i < 11; i++) {
       z += Math.abs(1 - 4.0 / 330 * cntZ[i]);
     }
+
     if (X + Y + Z > x + y + z) {
       X = x;
       Y = y;
@@ -171,12 +174,11 @@ public class GenerationUtils {
         D[i] = d[i];
         E[i] = e[i];
       }
-      FileWriter fileWriter = writeToFile(s, cntX);
-      fileWriter.close();
+      FileWriter fw = writeToFile(s, cntX);
+      fw.close();
     }
   }
 
-  @NotNull
   private FileWriter writeToFile(String[][] s, int[][][] cntX) throws IOException {
     FileWriter fileWriter = new FileWriter(outputFile, true);
     fileWriter.write(X + " " + Y + " " + Z + "\n");
@@ -212,131 +214,211 @@ public class GenerationUtils {
     return fileWriter;
   }
 
-  public void iterate5(int[] a, int[] b, int[][] c, int[] d) {
+
+  private void iterate5(int[] a, int[] b, int[][] c, int[] d) throws IOException {
     int[] e = new int[5];
-    for (e[0] = 0; e[0] < 4; e[0]++) {
-      for (e[1] = 0; e[1] < 4; e[1]++) {
-        for (e[2] = 0; e[2] < 4; e[2]++) {
-          for (e[3] = 0; e[3] < 4; e[3]++) {
-            for (e[4] = 0; e[4] < 4; e[4]++) {
+    for (e[0] = 0; e[0] < 4; e[0]++)
+      for (e[1] = 0; e[1] < 4; e[1]++)
+        for (e[2] = 0; e[2] < 4; e[2]++)
+          for (e[3] = 0; e[3] < 4; e[3]++)
+            for (e[4] = 0; e[4] < 4; e[4]++)
               calculate(a, b, c, d, e);
-            }
-          }
-        }
-      }
-    }
   }
 
-  public void iterate4(int[] a, int[] b, int[][] c) {
+  private void iterate4(int[] a, int[] b, int[][] c) throws IOException {
     int[] d = new int[5];
-    for (d[0] = 0; d[0] < 2; d[0]++) {
-      for (d[1] = 0; d[1] < 2; d[1]++) {
-        for (d[2] = 0; d[2] < 2; d[2]++) {
-          for (d[3] = 0; d[3] < 2; d[3]++) {
-            for (d[4] = 0; d[4] < 2; d[4]++) {
+    for (d[0] = 0; d[0] < 2; d[0]++)
+      for (d[1] = 0; d[1] < 2; d[1]++)
+        for (d[2] = 0; d[2] < 2; d[2]++)
+          for (d[3] = 0; d[3] < 2; d[3]++)
+            for (d[4] = 0; d[4] < 2; d[4]++)
               iterate5(a, b, c, d);
-            }
-          }
+  }
+
+  public void iterate3(int[] a, int[] b) throws IOException {
+    int[][] c = new int[5][3];
+    c[0] = new int[]{0, 1, 2};
+    int[][] c_permutations = {{0, 1, 2}, {0, 2, 1}, {1, 2, 0}, {1, 0, 2}, {2, 0, 1}, {2, 1, 0}};
+    c[1] = new int[]{0, 1, 2};
+    for (int[] c2 : c_permutations) {
+      for (int[] c3 : c_permutations) {
+        for (int[] c4 : c_permutations) {
+          c[2] = c2;
+          c[3] = c3;
+          c[4] = c4;
+          iterate4(a, b, c);
         }
       }
     }
   }
 
-  public void iterate3(int[] a, int[] b) {
-    int[][] c = {{0, 1, 2}, {0, 1, 2}, {0, 1, 2}, {0, 1, 2}, {0, 1, 2}};
-    do {
-      do {
-        do {
-          do {
-            iterate4(a, b, c);
-          } while (nextPermutation(c[4]));
-        } while (nextPermutation(c[3]));
-      } while (nextPermutation(c[2]));
-    } while (nextPermutation(c[1]));
-  }
-
-  public boolean check2(int[] a, int[] b) {
-    for (int i = 0; i < 5; i++) {
-      if (b[i] == i || str[i].charAt(10) - 'A' == a[b[i]] || str[i].charAt(10) - 'A' == (a[b[i]] + b[i] + 1) % 11 || str[i].charAt(11) - 'A' == a[b[i]] || str[i].charAt(11) - 'A' == (a[b[i]] + b[i] + 1) % 11) {
+  private boolean check2(int[] a, int[] b) {
+    for (int i = 0; i < 5; i++)
+      if (b[i] == i || str[i].charAt(10) - 'A' == a[b[i]] || str[i].charAt(10) - 'A' == (a[b[i]] + b[i] + 1) % 11 || str[i].charAt(11) - 'A' == a[b[i]] || str[i].charAt(11) - 'A' == (a[b[i]] + b[i] + 1) % 11)
         return false;
-      }
-    }
     return true;
   }
 
-  public void iterate2(int[] a) {
-    int[] b = {0, 1, 2, 3, 4};
-    do {
+  public void iterate2(int[] a) throws IOException {
+
+    //<editor-fold desc="B Permutations">
+    int[][] b_permutations = {{0, 1, 2, 3, 4},
+        {0, 1, 2, 4, 3},
+        {0, 1, 3, 2, 4},
+        {0, 1, 3, 4, 2},
+        {0, 1, 4, 2, 3},
+        {0, 1, 4, 3, 2},
+        {0, 2, 1, 3, 4},
+        {0, 2, 1, 4, 3},
+        {0, 2, 3, 1, 4},
+        {0, 2, 3, 4, 1},
+        {0, 2, 4, 1, 3},
+        {0, 2, 4, 3, 1},
+        {0, 3, 1, 2, 4},
+        {0, 3, 1, 4, 2},
+        {0, 3, 2, 1, 4},
+        {0, 3, 2, 4, 1},
+        {0, 3, 4, 1, 2},
+        {0, 3, 4, 2, 1},
+        {0, 4, 1, 2, 3},
+        {0, 4, 1, 3, 2},
+        {0, 4, 2, 1, 3},
+        {0, 4, 2, 3, 1},
+        {0, 4, 3, 1, 2},
+        {0, 4, 3, 2, 1},
+        {1, 0, 2, 3, 4},
+        {1, 0, 2, 4, 3},
+        {1, 0, 3, 2, 4},
+        {1, 0, 3, 4, 2},
+        {1, 0, 4, 2, 3},
+        {1, 0, 4, 3, 2},
+        {1, 2, 0, 3, 4},
+        {1, 2, 0, 4, 3},
+        {1, 2, 3, 0, 4},
+        {1, 2, 3, 4, 0},
+        {1, 2, 4, 0, 3},
+        {1, 2, 4, 3, 0},
+        {1, 3, 0, 2, 4},
+        {1, 3, 0, 4, 2},
+        {1, 3, 2, 0, 4},
+        {1, 3, 2, 4, 0},
+        {1, 3, 4, 0, 2},
+        {1, 3, 4, 2, 0},
+        {1, 4, 0, 2, 3},
+        {1, 4, 0, 3, 2},
+        {1, 4, 2, 0, 3},
+        {1, 4, 2, 3, 0},
+        {1, 4, 3, 0, 2},
+        {1, 4, 3, 2, 0},
+        {2, 0, 1, 3, 4},
+        {2, 0, 1, 4, 3},
+        {2, 0, 3, 1, 4},
+        {2, 0, 3, 4, 1},
+        {2, 0, 4, 1, 3},
+        {2, 0, 4, 3, 1},
+        {2, 1, 0, 3, 4},
+        {2, 1, 0, 4, 3},
+        {2, 1, 3, 0, 4},
+        {2, 1, 3, 4, 0},
+        {2, 1, 4, 0, 3},
+        {2, 1, 4, 3, 0},
+        {2, 3, 0, 1, 4},
+        {2, 3, 0, 4, 1},
+        {2, 3, 1, 0, 4},
+        {2, 3, 1, 4, 0},
+        {2, 3, 4, 0, 1},
+        {2, 3, 4, 1, 0},
+        {2, 4, 0, 1, 3},
+        {2, 4, 0, 3, 1},
+        {2, 4, 1, 0, 3},
+        {2, 4, 1, 3, 0},
+        {2, 4, 3, 0, 1},
+        {2, 4, 3, 1, 0},
+        {3, 0, 1, 2, 4},
+        {3, 0, 1, 4, 2},
+        {3, 0, 2, 1, 4},
+        {3, 0, 2, 4, 1},
+        {3, 0, 4, 1, 2},
+        {3, 0, 4, 2, 1},
+        {3, 1, 0, 2, 4},
+        {3, 1, 0, 4, 2},
+        {3, 1, 2, 0, 4},
+        {3, 1, 2, 4, 0},
+        {3, 1, 4, 0, 2},
+        {3, 1, 4, 2, 0},
+        {3, 2, 0, 1, 4},
+        {3, 2, 0, 4, 1},
+        {3, 2, 1, 0, 4},
+        {3, 2, 1, 4, 0},
+        {3, 2, 4, 0, 1},
+        {3, 2, 4, 1, 0},
+        {3, 4, 0, 1, 2},
+        {3, 4, 0, 2, 1},
+        {3, 4, 1, 0, 2},
+        {3, 4, 1, 2, 0},
+        {3, 4, 2, 0, 1},
+        {3, 4, 2, 1, 0},
+        {4, 0, 1, 2, 3},
+        {4, 0, 1, 3, 2},
+        {4, 0, 2, 1, 3},
+        {4, 0, 2, 3, 1},
+        {4, 0, 3, 1, 2},
+        {4, 0, 3, 2, 1},
+        {4, 1, 0, 2, 3},
+        {4, 1, 0, 3, 2},
+        {4, 1, 2, 0, 3},
+        {4, 1, 2, 3, 0},
+        {4, 1, 3, 0, 2},
+        {4, 1, 3, 2, 0},
+        {4, 2, 0, 1, 3},
+        {4, 2, 0, 3, 1},
+        {4, 2, 1, 0, 3},
+        {4, 2, 1, 3, 0},
+        {4, 2, 3, 0, 1},
+        {4, 2, 3, 1, 0},
+        {4, 3, 0, 1, 2},
+        {4, 3, 0, 2, 1},
+        {4, 3, 1, 0, 2},
+        {4, 3, 1, 2, 0},
+        {4, 3, 2, 0, 1},
+        {4, 3, 2, 1, 0}
+    };
+    //</editor-fold>
+
+    for (int[] b : b_permutations) {
       if (check2(a, b)) {
         iterate3(a, b);
       }
-    } while (nextPermutation(b));
+    }
   }
 
-  public int check1(int[] a) {
+
+  private boolean check1(int[] a) {
     int[] aa = {a[0], a[1], a[2], a[3], a[4], (a[0] + 1) % 11, (a[1] + 2) % 11, (a[2] + 3) % 11, (a[3] + 4) % 11, (a[4] + 5) % 11};
     int cnt = 0;
     Arrays.sort(aa);
     for (int i = 0; i < 10; i++) {
       if (i != 0 && aa[i - 1] == aa[i] && aa[i] != 8) {
-        return 0;
+        return false;
       }
       if (aa[i] == 8) {
         cnt++;
       }
     }
-    return cnt == 2 || cnt == 3 ? 1 : 0;
+    return cnt == 2 || cnt == 3;
   }
 
-  public void iterate1() {
+  private void iterate1() throws IOException {
     int[] a = new int[5];
-    a[0] = band;
-    a[1] = index;
-
-    for (a[2] = 0; a[2] < 11; a[2]++) {
-      for (a[3] = 0; a[3] < 11; a[3]++) {
-        for (a[4] = 0; a[4] < 11; a[4]++) {
-          if (check1(a) != 0) {
-            iterate2(a);
-          }
-        }
+    for (a[0] = 9; a[0] < 11; a[0]++) {
+      for (a[1] = 0; a[1] < 11; a[1]++) {
+        System.out.print("a: " + a[0] + ' ' + a[1] + '\n');
+        for (a[2] = 0; a[2] < 11; a[2]++)
+          for (a[3] = 0; a[3] < 11; a[3]++)
+            for (a[4] = 0; a[4] < 11; a[4]++)
+              if (check1(a))
+                iterate2(a);
       }
-    }
-
-  }
-
-  public boolean nextPermutation(int[] nums) {
-    int i = nums.length - 2;
-    while (i >= 0 && nums[i] >= nums[i + 1]) {
-      i--;
-    }
-    if (i < 0) {
-      return false;
-    }
-    int j = nums.length - 1;
-    while (nums[j] <= nums[i]) {
-      j--;
-    }
-    swap(nums, i, j);
-    reverse(nums, i + 1);
-    return true;
-  }
-
-  public void swap(int[] nums, int i, int j) {
-    int temp = nums[i];
-    nums[i] = nums[j];
-    nums[j] = temp;
-  }
-
-  public void reverse(int[] nums, int start) {
-    int i = start;
-    int j = nums.length - 1;
-    while (i < j) {
-      swap(nums, i, j);
-      i++;
-      j--;
     }
   }
 }
-
-

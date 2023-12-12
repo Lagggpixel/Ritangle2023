@@ -9,6 +9,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicIntegerArray;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Reid Cao
@@ -18,11 +20,199 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class CriteriaUtils {
 
   public static void checkAllCriteria(Tournament tournament) {
+    boolean allCriteriaMet = true;
     System.out.println("Checking all criteria");
     checkCriteriaOne(tournament);
     checkCriteriaTwo(tournament);
     checkCriteriaThree(tournament);
     checkCriteriaFour(tournament);
+
+    checkCriteriaFive(tournament);
+    checkCriteriaSix(tournament);
+    checkCriteriaSeven(tournament);
+    checkCriteriaEight(tournament);
+    if (!checkCriteriaNine(tournament)) {
+      allCriteriaMet = false;
+    }
+    if (allCriteriaMet) {
+      System.out.println("All criteria met");
+    }
+    else {
+      System.out.println("Not all criteria met");
+    }
+  }
+
+  private static boolean checkCriteriaNine(Tournament tournament) {
+    boolean criteriaMet = true;
+    System.out.println("  Checking criteria nine");
+    System.out.println("    Over all the rounds taken together, the number of blacks for each team shall equal the number of whites.");
+    int[] whites = new int[Main.numberOfTeams];
+    int[] blacks = new int[Main.numberOfTeams];
+    tournament.getRounds().forEach((roundIndex, round) -> {
+      round.getBoards().forEach((boardIndex, board) -> {
+        board.getPairs().forEach((pairIndex, pair) -> {
+          AtomicInteger team1Index = new AtomicInteger();
+          Main.letterIndex.forEach((k, v) -> {
+            if (Objects.equals(pair.team1(), v)) {
+              team1Index.set(k);
+            }
+          });
+          AtomicInteger team2Index = new AtomicInteger();
+          Main.letterIndex.forEach((k, v) -> {
+            if (Objects.equals(pair.team2(), v)) {
+              team2Index.set(k);
+            }
+          });
+          whites[team1Index.get() - 1]++;
+          blacks[team2Index.get() - 1]++;
+        });
+      });
+    });
+
+    for (int teamIndex = 0; teamIndex < whites.length; teamIndex++) {
+        int black = blacks[teamIndex];
+        int white = whites[teamIndex];
+        if (black != white) {
+          System.out.println("Invalid team: " + Main.letterIndex.get(teamIndex + 1) + " black: " + black + " white: " + white);
+          criteriaMet = false;
+          // System.exit(0);
+        }
+    }
+    if(criteriaMet) {
+      System.out.println("  Criteria 9 passed");
+    }
+    else {
+      System.out.println("  Criteria 9 failed");
+    }
+    return criteriaMet;
+  }
+
+  private static void checkCriteriaEight(@NotNull Tournament tournament) {
+    System.out.println("  Checking criteria eight");
+    System.out.println("    The number of times a player is black shall differ by no more than 1 from the number of times a player is white.");
+    int[][] whites = new int[Main.numberOfTeams][Main.numberOfPlayers];
+    int[][] blacks = new int[Main.numberOfTeams][Main.numberOfPlayers];
+    tournament.getRounds().forEach((roundIndex, round) -> {
+      round.getBoards().forEach((boardIndex, board) -> {
+        board.getPairs().forEach((pairIndex, pair) -> {
+          AtomicInteger team1Index = new AtomicInteger();
+          Main.letterIndex.forEach((k, v) -> {
+            if (Objects.equals(pair.team1(), v)) {
+              team1Index.set(k);
+            }
+          });
+          AtomicInteger team2Index = new AtomicInteger();
+          Main.letterIndex.forEach((k, v) -> {
+            if (Objects.equals(pair.team2(), v)) {
+              team2Index.set(k);
+            }
+          });
+          whites[team1Index.get() - 1][pair.team1Board() - 1]++;
+          blacks[team2Index.get() - 1][pair.team2Board() - 1]++;
+        });
+      });
+    });
+
+    for (int teamIndex = 0; teamIndex < whites.length; teamIndex++) {
+      for (int playerIndex = 0; playerIndex < whites[teamIndex].length; playerIndex++) {
+        int black = blacks[teamIndex][playerIndex];
+        int white = whites[teamIndex][playerIndex];
+        if (Math.abs(black - white) > 1) {
+          System.out.println("Invalid team: " + Main.letterIndex.get(teamIndex + 1) + " player: " + (playerIndex + 1) + " black: " + black + " white: " + white);
+          System.exit(0);
+        }
+      }
+    }
+    System.out.println("  Criteria 8 passed");
+  }
+
+  private static void checkCriteriaSeven(@NotNull Tournament tournament) {
+    System.out.println("  Checking criteria seven");
+    System.out.println("    All up-floats shall have the white pieces.");
+
+    tournament.getRounds().forEach((roundIndex, round) -> {
+      Board board = round.getBoards().get(-1);
+      if (board != null) {
+        board.getPairs().forEach((pairIndex, pair) -> {
+          if (pair.team1Board() <= pair.team2Board()) {
+            System.out.println("Invalid pair: " + pair.team1() + " vs " + pair.team2() + " in round " + roundIndex + " board up down floats.");
+            System.exit(0);
+          }
+        });
+      }
+    });
+    System.out.println("  Criteria 7 passed");
+  }
+
+  private static void checkCriteriaSix(@NotNull Tournament tournament) {
+    System.out.println("  Checking criteria six");
+    int constant = (int) (2 + Math.floor((float) Main.numberOfRounds * Main.numberOfPlayers / (2 * Main.numberOfTeams)));
+    System.out.println("    Over all the rounds taken together, no team shall have more than " + constant + " up-floats nor more than " + constant + " down-floats.");
+    int[] upFloats = new int[Main.numberOfTeams];
+    int[] downFloats = new int[Main.numberOfTeams];
+    tournament.getRounds().forEach((roundIndex, round) -> {
+      Board board = round.getBoards().get(-1);
+      if (board != null) {
+        board.getPairs().forEach((pairIndex, pair) -> {
+          if (pair.team1Board() != pair.team2Board()) {
+            AtomicInteger team1Index = new AtomicInteger();
+            Main.letterIndex.forEach((k, v) -> {
+              if (Objects.equals(pair.team1(), v)) {
+                team1Index.set(k);
+              }
+            });
+            AtomicInteger team2Index = new AtomicInteger();
+            Main.letterIndex.forEach((k, v) -> {
+              if (Objects.equals(pair.team2(), v)) {
+                team2Index.set(k);
+              }
+            });
+            upFloats[team1Index.get() - 1]++;
+            downFloats[team2Index.get() - 1]++;
+            if (upFloats[team1Index.get() - 1] > constant) {
+              System.out.println(pair.team1() + " has had more than " + constant + " up floats.");
+              System.exit(0);
+            }
+            if (downFloats[team2Index.get() - 1] > constant) {
+              System.out.println(pair.team2() + " has had more than " + constant + " down floats.");
+              System.exit(0);
+            }
+          }
+        });
+      }
+    });
+    System.out.println("  Criteria 6 passed");
+  }
+
+  private static void checkCriteriaFive(@NotNull Tournament tournament) {
+    System.out.println("  Check criteria five");
+    System.out.println("    No player shall have more than one up-float or more than one down-float.");
+    for (int teamIndex = 0; teamIndex < Main.numberOfTeams; teamIndex++) {
+      AtomicReference<AtomicIntegerArray> upFloats = new AtomicReference<>(new AtomicIntegerArray(new int[Main.numberOfPlayers]));
+      AtomicReference<AtomicIntegerArray> downFloats = new AtomicReference<>(new AtomicIntegerArray(new int[Main.numberOfPlayers]));
+      tournament.getRounds().forEach((roundIndex, round) -> {
+        Board board = round.getBoards().get(-1);
+        if (board != null) {
+          board.getPairs().forEach((pairIndex, pair) -> {
+            if (pair.team1Board() != pair.team2Board()) {
+              upFloats.get().getAndIncrement(pair.team1Board() - 1);
+              downFloats.get().getAndIncrement(pair.team2Board() - 1);
+              if (upFloats.get().get(pair.team1Board() - 1) > 1) {
+                System.out.println(pair.team1() + "." + pair.team1Board() + " has had more than 1 up floats.");
+                System.exit(0);
+              }
+              if (downFloats.get().get(pair.team2Board() - 1) > 1) {
+                System.out.println(pair.team2() + "." + pair.team2Board() + " has had more than 1 down floats.");
+                System.exit(0);
+              }
+            }
+          });
+        }
+        upFloats.set(new AtomicIntegerArray(new int[Main.numberOfPlayers]));
+        downFloats.set(new AtomicIntegerArray(new int[Main.numberOfPlayers]));
+      });
+    }
+    System.out.println("  Criteria 5 passed");
   }
 
   private static void checkCriteriaFour(@NotNull Tournament tournament) {
@@ -46,8 +236,7 @@ public class CriteriaUtils {
                 System.out.println(pair.team1Board() + " has had more than 1 up floats in round" + roundIndex);
                 System.exit(0);
               }
-            }
-            else {
+            } else {
               upFloats[pair.team2Board() - 1]++;
               downFloats[pair.team1Board() - 1]++;
               if (downFloats[pair.team1Board() - 1] > 1) {
